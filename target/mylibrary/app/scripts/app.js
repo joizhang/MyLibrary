@@ -91,7 +91,7 @@ angular.module('MyLibraryApp', [
                         return $ocLazyLoad.load({
                             name:'MyLibraryApp',
                             files:[
-                                'app/scripts/controllers/IndexController.js',
+                                'app/scripts/controllers/AnalysisController.js',
                             ]
                         })
                     }
@@ -113,11 +113,22 @@ angular.module('MyLibraryApp', [
                 }
             })
             .state('signin',{
+                url:'/signin',
+                controller: 'SignInController',
                 templateUrl:'app/partials/signin.html',
-                url:'/signin'
+                resolve: {
+                    loadMyFiles:function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name:'MyLibraryApp',
+                            files:[
+                                'app/scripts/controllers/SignInController.js',
+                            ]
+                        })
+                    }
+                }
             })
             .state('signup',{
-                templateUrl:'app/partials/signin.html',
-                url:'/signup'
+                url:'/signup',
+                templateUrl:'app/partials/signin.html'
             })
     }])

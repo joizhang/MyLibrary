@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-src/main/webapp/static/bower_components
 .idea/workspace.xml
 .idea/vcs.xml
-=======
 src/main/webapp/app/bower_components
->>>>>>> 0f5b7b425b60a9c9e1885782d9762a6312874363
