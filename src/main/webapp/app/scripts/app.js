@@ -93,7 +93,14 @@ angular.module('MyLibraryApp', [
                             files:[
                                 'app/scripts/controllers/AnalysisController.js',
                             ]
-                        })
+                        }),
+                            $ocLazyLoad.load({
+                                name:'chart.js',
+                                files:[
+                                    'app/bower_components/angular-chart.js/dist/angular-chart.min.js',
+                                    'app/bower_components/angular-chart.js/dist/angular-chart.css'
+                                ]
+                            })
                     }
                 }
             })

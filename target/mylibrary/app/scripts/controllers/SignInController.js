@@ -1,6 +1,6 @@
 angular.module('MyLibraryApp')
-    .controller('SignInController', function($scope,$position) {
-        $scope.user = {'username': 123};
+    .controller('SignInController', function($scope) {
+        $scope.user = {};
         $scope.submitForm = function(valid) {
             if(valid) {
                 console.log('hello Angular!')
