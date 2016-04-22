@@ -56,7 +56,7 @@ public class SysUser implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name = "user_id", unique = true, nullable = false, length = 32)
+	@Column(name = "user_id", unique = true, nullable = false, length = 64)
 	public String getUserId() {
 		return this.userId;
 	}

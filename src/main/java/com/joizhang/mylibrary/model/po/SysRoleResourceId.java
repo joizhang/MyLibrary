@@ -28,7 +28,7 @@ public class SysRoleResourceId implements java.io.Serializable {
 
 	// Property accessors
 
-	@Column(name = "resource_id", nullable = false, length = 32)
+	@Column(name = "resource_id", nullable = false, length = 64)
 	public String getResourceId() {
 		return this.resourceId;
 	}

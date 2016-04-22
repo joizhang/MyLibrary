@@ -9,10 +9,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.joizhang.mylibrary.dao.BaseDaoI;
+import com.joizhang.mylibrary.dao.IBaseDao;
 
 @Repository("baseDao")
-public class BaseDaoImpl<T> implements BaseDaoI<T> {
+public class BaseDaoImpl<T> implements IBaseDao<T> {
 
 	private SessionFactory sessionFactory;
 

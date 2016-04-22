@@ -3,7 +3,7 @@ package com.joizhang.mylibrary.dao;
 import java.io.Serializable;
 import java.util.List;
 
-public interface BaseDaoI<T> {
+public interface IBaseDao<T> {
 
 	public Serializable save(T o);
 

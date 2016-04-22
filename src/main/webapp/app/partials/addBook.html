@@ -6,6 +6,7 @@
                 <div class="panel-body">
                     <form name="bookForm" novalidate ng-submit="bookFormSubmit">
                         <div class="form-group">
+                            <label>一张图书封面</label>
                             <input type="file" class="btn btn-default" name="bookPhoto">
                         </div>
                         <div class="form-group">
@@ -16,6 +17,11 @@
                             <label>描述</label>
                             <textarea class="form-control" cols="40" rows="20" name="description"
                                       placeholder="给点简介吧..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>购书地址</label>
+                            <input type="url" class="form-control" name="sellAddress"
+                                   placeholder="当当/京东/天猫的购书地址">
                         </div>
                         <button type="submit" class="btn btn-success">新增书籍</button>
                     </form>

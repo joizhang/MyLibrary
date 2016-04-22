@@ -28,7 +28,7 @@ public class SysUserRoleId implements java.io.Serializable {
 
 	// Property accessors
 
-	@Column(name = "user_id", nullable = false, length = 32)
+	@Column(name = "user_id", nullable = false, length = 64)
 	public String getUserId() {
 		return this.userId;
 	}

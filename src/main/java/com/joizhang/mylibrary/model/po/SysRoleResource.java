@@ -40,7 +40,7 @@ public class SysRoleResource implements java.io.Serializable {
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "resourceId", column = @Column(name = "resource_id", nullable = false, length = 32)),
+			@AttributeOverride(name = "resourceId", column = @Column(name = "resource_id", nullable = false, length = 64)),
 			@AttributeOverride(name = "roleId", column = @Column(name = "role_id", nullable = false)) })
 	public SysRoleResourceId getId() {
 		return this.id;

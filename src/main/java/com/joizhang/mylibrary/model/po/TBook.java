@@ -7,11 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Book entity. @author MyEclipse Persistence Tools
+ * TBook entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "book", catalog = "mylibrary")
-public class Book implements java.io.Serializable {
+@Table(name = "t_book", catalog = "mylibrary")
+public class TBook implements java.io.Serializable {
 
 	// Fields
 
@@ -22,15 +22,16 @@ public class Book implements java.io.Serializable {
 	private String description;
 	private Integer lend;
 	private String borrowId;
+	private String sellAddress;
 
 	// Constructors
 
 	/** default constructor */
-	public Book() {
+	public TBook() {
 	}
 
 	/** minimal constructor */
-	public Book(String bookId, String bookName, String bookPhoto,
+	public TBook(String bookId, String bookName, String bookPhoto,
 			Timestamp createTime, Integer lend) {
 		this.bookId = bookId;
 		this.bookName = bookName;
@@ -40,9 +41,9 @@ public class Book implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Book(String bookId, String bookName, String bookPhoto,
+	public TBook(String bookId, String bookName, String bookPhoto,
 			Timestamp createTime, String description, Integer lend,
-			String borrowId) {
+			String borrowId, String sellAddress) {
 		this.bookId = bookId;
 		this.bookName = bookName;
 		this.bookPhoto = bookPhoto;
@@ -50,11 +51,12 @@ public class Book implements java.io.Serializable {
 		this.description = description;
 		this.lend = lend;
 		this.borrowId = borrowId;
+		this.sellAddress = sellAddress;
 	}
 
 	// Property accessors
 	@Id
-	@Column(name = "book_id", unique = true, nullable = false, length = 32)
+	@Column(name = "book_id", unique = true, nullable = false, length = 64)
 	public String getBookId() {
 		return this.bookId;
 	}
@@ -108,13 +110,22 @@ public class Book implements java.io.Serializable {
 		this.lend = lend;
 	}
 
-	@Column(name = "borrow_id", length = 32)
+	@Column(name = "borrow_id", length = 64)
 	public String getBorrowId() {
 		return this.borrowId;
 	}
 
 	public void setBorrowId(String borrowId) {
 		this.borrowId = borrowId;
+	}
+
+	@Column(name = "sell_address", length = 1024)
+	public String getSellAddress() {
+		return this.sellAddress;
+	}
+
+	public void setSellAddress(String sellAddress) {
+		this.sellAddress = sellAddress;
 	}
 
 }

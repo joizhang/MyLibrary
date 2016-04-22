@@ -56,7 +56,7 @@ public class SysResource implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name = "resource_id", unique = true, nullable = false, length = 32)
+	@Column(name = "resource_id", unique = true, nullable = false, length = 64)
 	public String getResourceId() {
 		return this.resourceId;
 	}
@@ -65,7 +65,7 @@ public class SysResource implements java.io.Serializable {
 		this.resourceId = resourceId;
 	}
 
-	@Column(name = "parent_id", nullable = false, length = 32)
+	@Column(name = "parent_id", nullable = false, length = 64)
 	public String getParentId() {
 		return this.parentId;
 	}
