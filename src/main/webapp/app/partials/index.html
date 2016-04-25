@@ -2,25 +2,23 @@
     <search></search>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" ng-repeat="book in books">
             <div class="thumbnail">
                 <div class="row" style="margin:15px 50px">
                     <div class="col-md-2">
-                        <a href="http://product.dangdang.com/20459091.html" target="_blank">
-                            <img src="app/images/effectivejava.jpg"/>
+                        <a href="{{book.sellAddress}}" target="_blank">
+                            <img ng-src="{{book.bookPhoto}}"/>
                         </a>
                     </div>
                     <div class="col-md-10">
                         <div class="row">
-                            <div class="col-md-9"><h3 style="margin-top: 0">Effective Java</h3></div>
+                            <div class="col-md-9"><h3 style="margin-top: 0">{{book.bookName}}</h3></div>
                             <div class="col-md-3 text-right">
-                                <small><i class="fa fa-calendar"></i> 2016-03-15</small>
+                                <small><i class="fa fa-calendar"></i> {{book.createTime}}</small>
                             </div>
                         </div>
                         <p style="min-height: 70px">
-                            本书介绍了在Java编程中78条极具实用价值的经验规则，这些经验规则涵盖了大多数开发人员每天所面临的问题的解
-                            决方案。通过对Java平台设计专家所使用的技术的全面描述，揭示了应该做什么，不应该做什么才能产生清晰、健壮
-                            和高效的代码。本书中的每条规则都以简短、独立的小文章形式出现，并通过例子代码加以进一步说明。
+                            {{book.description}}
                         </p>
                         <div class="row">
                             <div class="col-md-3 col-md-offset-9 text-right">
@@ -28,40 +26,6 @@
                                     <li><a href=""><i class="fa fa-edit"></i> 修改</a></li>
                                     <li><a href=""><i class="fa fa-trash"></i> 删除</a></li>
                                     <li><a href=""><i class="fa fa-minus"></i> 借出</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="thumbnail">
-                <div class="row" style="margin:15px 50px">
-                    <div class="col-md-2">
-                        <a href="http://product.dangdang.com/20459091.html" target="_blank">
-                            <img src="app/images/effectivejava.jpg"/>
-                        </a>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div class="col-md-9"><h3 style="margin-top: 0">Effective Java</h3></div>
-                            <div class="col-md-3 text-right">
-                                <small><i class="fa fa-calendar"></i> 2016-03-15</small>
-                            </div>
-                        </div>
-                        <p>
-                            本书介绍了在Java编程中78条极具实用价值的经验规则，这些经验规则涵盖了大多数开发人员每天所面临的问题的解
-                            决方案。通过对Java平台设计专家所使用的技术的全面描述，揭示了应该做什么，不应该做什么才能产生清晰、健壮
-                            和高效的代码。本书中的每条规则都以简短、独立的小文章形式出现，并通过例子代码加以进一步说明。
-                        </p>
-                        <div class="row">
-                            <div class="col-md-3 col-md-offset-9 text-right">
-                                <ul class="list-inline" style="color: #999">
-                                    <li><a href=""><i class="fa fa-edit"></i> 修改</a></li>
-                                    <li><a href=""><i class="fa fa-trash"></i> 删除</a></li>
-                                    <li><a href=""><i class="fa fa-plus"></i> 返还</a></li>
                                 </ul>
                             </div>
                         </div>

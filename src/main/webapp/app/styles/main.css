@@ -30,3 +30,11 @@
     background-size: cover;
     display: block;
 }
+.showcase-form textarea.ng-invalid.ng-dirty,
+.showcase-form select.ng-invalid.ng-dirty,
+.showcase-form input.ng-invalid.ng-dirty {
+    border-color: #e9322d;
+    -webkit-box-shadow: 0 0 6px #f8b9b7;
+    -moz-box-shadow: 0 0 6px #f8b9b7;
+    box-shadow: 0 0 6px #f8b9b7;
+}

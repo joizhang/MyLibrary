@@ -4,26 +4,34 @@
             <div class="panel panel-default">
                 <div class="panel-heading">请添加新书</div>
                 <div class="panel-body">
-                    <form name="bookForm" novalidate ng-submit="bookFormSubmit">
+                    <form name="bookForm" novalidate ng-submit="bookFormSubmit(bookForm.$valid)" class="showcase-form"
+                          enctype="multipart/form-data">
                         <div class="form-group">
                             <label>一张图书封面</label>
-                            <input type="file" class="btn btn-default" name="bookPhoto">
+                            <input type="file" class="btn btn-default" name="bookPhoto" ng-model="book.bookPhoto">
                         </div>
+
                         <div class="form-group">
                             <label>图书名</label>
-                            <input type="text" class="form-control" name="bookName">
+                            <input type="text" class="form-control" name="bookName" ng-model="book.bookName" required>
                         </div>
+
                         <div class="form-group">
                             <label>描述</label>
                             <textarea class="form-control" cols="40" rows="20" name="description"
-                                      placeholder="给点简介吧..."></textarea>
+                                      ng-model="book.description"
+                                      placeholder="给点简介吧..." required></textarea>
                         </div>
+
                         <div class="form-group">
                             <label>购书地址</label>
-                            <input type="url" class="form-control" name="sellAddress"
-                                   placeholder="当当/京东/天猫的购书地址">
+                            <input type="url" class="form-control" name="sellAddress" ng-model="book.sellAddress"
+                                   placeholder="当当/京东/天猫的购书地址" required>
                         </div>
-                        <button type="submit" class="btn btn-success">新增书籍</button>
+
+                        <button type="submit" class="btn btn-success"
+                                ng-disabled="bookForm.$invalid">新增书籍
+                        </button>
                     </form>
                 </div>
             </div>

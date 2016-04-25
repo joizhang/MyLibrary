@@ -7,12 +7,12 @@ angular.module('MyLibraryApp', [
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
-    'angular-loading-bar',
+    'angular-loading-bar'
 ])
     .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
         $ocLazyLoadProvider.config({
             debug:false,
-            events:true,
+            events:true
         });
 
         $urlRouterProvider.otherwise('/main/index');
@@ -29,7 +29,7 @@ angular.module('MyLibraryApp', [
                                     files:[
                                         'app/scripts/directives/header/header.js',
                                         'app/scripts/directives/footer/footer.js',
-                                        'app/scripts/directives/search/search.js',
+                                        'app/scripts/directives/search/search.js'
                                     ]
                                 }),
                             $ocLazyLoad.load(
@@ -43,22 +43,22 @@ angular.module('MyLibraryApp', [
                                 {
                                     name:'ngAnimate',
                                     files:['app/bower_components/angular-animate/angular-animate.js']
-                                })
+                                }),
                         $ocLazyLoad.load(
                             {
                                 name:'ngCookies',
                                 files:['app/bower_components/angular-cookies/angular-cookies.js']
-                            })
+                            }),
                         $ocLazyLoad.load(
                             {
                                 name:'ngResource',
                                 files:['app/bower_components/angular-resource/angular-resource.js']
-                            })
+                            }),
                         $ocLazyLoad.load(
                             {
                                 name:'ngSanitize',
                                 files:['app/bower_components/angular-sanitize/angular-sanitize.js']
-                            })
+                            }),
                         $ocLazyLoad.load(
                             {
                                 name:'ngTouch',
@@ -76,7 +76,7 @@ angular.module('MyLibraryApp', [
                         return $ocLazyLoad.load({
                             name:'MyLibraryApp',
                             files:[
-                                'app/scripts/controllers/IndexController.js',
+                                'app/scripts/controllers/IndexController.js'
                             ]
                         })
                     }
@@ -91,7 +91,7 @@ angular.module('MyLibraryApp', [
                         return $ocLazyLoad.load({
                             name:'MyLibraryApp',
                             files:[
-                                'app/scripts/controllers/AnalysisController.js',
+                                'app/scripts/controllers/AnalysisController.js'
                             ]
                         }),
                             $ocLazyLoad.load({
@@ -113,7 +113,7 @@ angular.module('MyLibraryApp', [
                         return $ocLazyLoad.load({
                             name:'MyLibraryApp',
                             files:[
-                                'app/scripts/controllers/AddBookController.js',
+                                'app/scripts/controllers/AddBookController.js'
                             ]
                         })
                     }
@@ -128,14 +128,10 @@ angular.module('MyLibraryApp', [
                         return $ocLazyLoad.load({
                             name:'MyLibraryApp',
                             files:[
-                                'app/scripts/controllers/SignInController.js',
+                                'app/scripts/controllers/SignInController.js'
                             ]
                         })
                     }
                 }
             })
-            .state('signup',{
-                url:'/signup',
-                templateUrl:'app/partials/signin.html'
-            })
-    }])
+    }]);
