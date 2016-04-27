@@ -1,10 +1,10 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name MyLibraryApp.controller:IndexController
  * @description
- * # MainCtrl
- * Controller of the sbAdminApp
+ * # IndexController
+ * Controller of the MyLibraryApp
  */
 angular.module('MyLibraryApp')
     .controller('IndexController', function($scope, $http, $position) {

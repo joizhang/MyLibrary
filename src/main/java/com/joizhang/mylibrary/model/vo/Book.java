@@ -13,6 +13,7 @@ public class Book {
     private String description;
     private Integer lend;
     private String borrowId;
+    private String sellAddress;
 
     public String getBookId() {
         return bookId;
@@ -70,6 +71,14 @@ public class Book {
         this.borrowId = borrowId;
     }
 
+    public String getSellAddress() {
+        return sellAddress;
+    }
+
+    public void setSellAddress(String sellAddress) {
+        this.sellAddress = sellAddress;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -80,6 +89,7 @@ public class Book {
                 ", description='" + description + '\'' +
                 ", lend=" + lend +
                 ", borrowId='" + borrowId + '\'' +
+                ", sellAddress='" + sellAddress + '\'' +
                 '}';
     }
 }

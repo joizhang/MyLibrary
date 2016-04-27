@@ -4,13 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">请添加新书</div>
                 <div class="panel-body">
-                    <form name="bookForm" novalidate ng-submit="bookFormSubmit(bookForm.$valid)" class="showcase-form"
-                          enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>一张图书封面</label>
-                            <input type="file" class="btn btn-default" name="bookPhoto" ng-model="book.bookPhoto">
-                        </div>
-
+                    <form name="bookForm" novalidate ng-submit="bookFormSubmit(bookForm.$valid)" class="showcase-form">
                         <div class="form-group">
                             <label>图书名</label>
                             <input type="text" class="form-control" name="bookName" ng-model="book.bookName" required>
