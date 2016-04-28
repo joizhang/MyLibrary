@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2016-04-25 09:13:32
+Date: 2016-04-28 14:06:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -101,7 +101,7 @@ DROP TABLE IF EXISTS `t_book`;
 CREATE TABLE `t_book` (
   `book_id` varchar(64) NOT NULL,
   `book_name` varchar(32) NOT NULL,
-  `book_photo` varchar(32) NOT NULL,
+  `book_photo` varchar(32) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `description` text,
   `lend` int(11) NOT NULL,

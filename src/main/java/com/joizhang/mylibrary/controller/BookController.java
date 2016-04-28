@@ -33,14 +33,13 @@ public class BookController {
     /*添加新图书*/
     @RequestMapping(value = "/addBook", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Void> addBook(@RequestBody Book book) {
+    public String addBook(@RequestBody Book book) {
 
         logger.info("1 {}",ReflectionToStringBuilder.toString(book));
-        String message = bookService.addBook(book);
-        if (message.equals("error")) {
-            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
+        if (bookService.addBook(book)) {
+            return "ok";
         } else {
-            return new ResponseEntity<Void>(HttpStatus.OK);
+            return "fail";
         }
     }
 

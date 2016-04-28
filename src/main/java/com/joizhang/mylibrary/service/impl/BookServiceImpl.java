@@ -26,7 +26,7 @@ public class BookServiceImpl implements IBookService {
     @Autowired
     private ISysLogService logService;
 
-    public String addBook(Book book) {
+    public boolean addBook(Book book) {
         TBook tBook = new TBook();
         BeanUtils.copyProperties(book, tBook);
 
@@ -35,16 +35,16 @@ public class BookServiceImpl implements IBookService {
         tBook.setCreateTime(new Timestamp(System.currentTimeMillis()));
         tBook.setLend(0);
 
-        TBook bookFromDb =  bookDAO.get("from TBook t where replace(t.bookName, ' ', '')=?0", new String[]{tBook.getBookName().trim()});
+        TBook bookFromDb =  bookDAO.get("from TBook t where replace(t.bookName, ' ', '')=?0 or t.bookNumber=?1", new String[]{tBook.getBookName().trim(), tBook.getBookNumber()});
         if(bookFromDb != null) {
-            return "error";
+            return false;
         }
 
         System.out.println("Book's id is " + tBook.getBookId());
         bookDAO.save(tBook);
         logService.saveSysLog(tBook, ISysLogService.CREATE);
 
-        return "success";
+        return true;
     }
 
     public String deleteBook(String bookId) {

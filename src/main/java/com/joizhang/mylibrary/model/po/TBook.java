@@ -16,6 +16,7 @@ public class TBook implements java.io.Serializable {
 	// Fields
 
 	private String bookId;
+	private String bookNumber;
 	private String bookName;
 	private String bookPhoto;
 	private Timestamp createTime;
@@ -31,20 +32,21 @@ public class TBook implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public TBook(String bookId, String bookName, String bookPhoto,
+	public TBook(String bookId, String bookNumber, String bookName,
 			Timestamp createTime, Integer lend) {
 		this.bookId = bookId;
+		this.bookNumber = bookNumber;
 		this.bookName = bookName;
-		this.bookPhoto = bookPhoto;
 		this.createTime = createTime;
 		this.lend = lend;
 	}
 
 	/** full constructor */
-	public TBook(String bookId, String bookName, String bookPhoto,
-			Timestamp createTime, String description, Integer lend,
-			String borrowId, String sellAddress) {
+	public TBook(String bookId, String bookNumber, String bookName,
+			String bookPhoto, Timestamp createTime, String description,
+			Integer lend, String borrowId, String sellAddress) {
 		this.bookId = bookId;
+		this.bookNumber = bookNumber;
 		this.bookName = bookName;
 		this.bookPhoto = bookPhoto;
 		this.createTime = createTime;
@@ -65,6 +67,15 @@ public class TBook implements java.io.Serializable {
 		this.bookId = bookId;
 	}
 
+	@Column(name = "book_number", nullable = false, length = 32)
+	public String getBookNumber() {
+		return this.bookNumber;
+	}
+
+	public void setBookNumber(String bookNumber) {
+		this.bookNumber = bookNumber;
+	}
+
 	@Column(name = "book_name", nullable = false, length = 32)
 	public String getBookName() {
 		return this.bookName;
@@ -74,7 +85,7 @@ public class TBook implements java.io.Serializable {
 		this.bookName = bookName;
 	}
 
-	@Column(name = "book_photo", nullable = false, length = 32)
+	@Column(name = "book_photo", length = 32)
 	public String getBookPhoto() {
 		return this.bookPhoto;
 	}

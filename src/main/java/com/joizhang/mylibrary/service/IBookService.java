@@ -6,7 +6,12 @@ import com.joizhang.mylibrary.model.vo.Book;
  * Created by Administrator on 2016/4/22.
  */
 public interface IBookService {
-    public String addBook(Book book);
+
+    /**
+     * 添加图书
+     * @param book 图书信息
+     * */
+    public boolean addBook(Book book);
 
     public String deleteBook(String bookId);
 }

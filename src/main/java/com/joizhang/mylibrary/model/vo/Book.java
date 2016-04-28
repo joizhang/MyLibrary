@@ -7,6 +7,7 @@ import java.sql.Timestamp;
  */
 public class Book {
     private String bookId;
+    private String bookNumber;
     private String bookName;
     private String bookPhoto;
     private Timestamp createTime;
@@ -21,6 +22,14 @@ public class Book {
 
     public void setBookId(String bookId) {
         this.bookId = bookId;
+    }
+
+    public String getBookNumber() {
+        return bookNumber;
+    }
+
+    public void setBookNumber(String bookNumber) {
+        this.bookNumber = bookNumber;
     }
 
     public String getBookName() {
@@ -83,6 +92,7 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "bookId='" + bookId + '\'' +
+                ", bookNumber='" + bookNumber + '\'' +
                 ", bookName='" + bookName + '\'' +
                 ", bookPhoto='" + bookPhoto + '\'' +
                 ", createTime=" + createTime +
