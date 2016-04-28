@@ -8,6 +8,8 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,10 +33,15 @@ public class BookController {
     /*添加新图书*/
     @RequestMapping(value = "/addBook", method = RequestMethod.POST)
     @ResponseBody
-    public void addBook(@RequestBody Book book) {
+    public ResponseEntity<Void> addBook(@RequestBody Book book) {
 
         logger.info("1 {}",ReflectionToStringBuilder.toString(book));
-
+        String message = bookService.addBook(book);
+        if (message.equals("error")) {
+            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }
     }
 
 }

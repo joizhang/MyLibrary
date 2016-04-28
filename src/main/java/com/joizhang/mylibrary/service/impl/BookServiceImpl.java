@@ -31,6 +31,7 @@ public class BookServiceImpl implements IBookService {
         BeanUtils.copyProperties(book, tBook);
 
         tBook.setBookId(UUID.randomUUID().toString());
+        tBook.setBookPhoto("app/images/effectivejava.jpg");
         tBook.setCreateTime(new Timestamp(System.currentTimeMillis()));
         tBook.setLend(0);
 
@@ -38,6 +39,8 @@ public class BookServiceImpl implements IBookService {
         if(bookFromDb != null) {
             return "error";
         }
+
+        System.out.println("Book's id is " + tBook.getBookId());
         bookDAO.save(tBook);
         logService.saveSysLog(tBook, ISysLogService.CREATE);
 
