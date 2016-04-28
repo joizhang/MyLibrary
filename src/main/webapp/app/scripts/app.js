@@ -7,7 +7,8 @@ angular.module('MyLibraryApp', [
         'oc.lazyLoad',
         'ui.router',
         'ui.bootstrap',
-        'angular-loading-bar'
+        'angular-loading-bar',
+        'MyLibraryService'
     ])
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         $ocLazyLoadProvider.config({

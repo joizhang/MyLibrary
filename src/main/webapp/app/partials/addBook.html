@@ -1,8 +1,11 @@
 <div class="container">
 
+
     <div class="row">
         <div class="col-md-12">
-            <alert ng-repeat="alert in alerts " type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+            <alert ng-repeat="alert in alerts" type="alert.type" close="alert.close()">
+                <span data-ng-bind-html="alert.msg"></span>
+            </alert>
         </div>
     </div>
 
