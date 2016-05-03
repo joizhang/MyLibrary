@@ -8,7 +8,7 @@ angular.module('MyLibraryApp', [
         'ui.router',
         'ui.bootstrap',
         'angular-loading-bar',
-        'MyLibraryService'
+        'globalAlert'
     ])
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         $ocLazyLoadProvider.config({
@@ -34,7 +34,8 @@ angular.module('MyLibraryApp', [
                         }),
                         $ocLazyLoad.load({
                             name: 'toggle-switch',
-                            files: ["app/bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
+                            files: [
+                                "app/bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
                                 "app/bower_components/angular-toggle-switch/angular-toggle-switch.css"
                             ]
                         }),
@@ -70,6 +71,11 @@ angular.module('MyLibraryApp', [
                         return $ocLazyLoad.load({
                             name: 'MyLibraryApp',
                             files: ['app/scripts/controllers/IndexController.js']
+                        }),
+                        $ocLazyLoad.load({
+                            name: 'tm.pagination',
+                            files: [
+                                'app/js/tm.pagination.js']
                         })
                     }
                 }

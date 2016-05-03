@@ -1,5 +1,16 @@
-<div class="container">
-    <search></search>
+<div class="container" ng-controller="IndexController">
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom: 20px">
+            <div class="input-group custom-search-form">
+                <input type="text" ng-model="vm.filter.$" class="form-control" placeholder="书名/描述/已借出/未借出...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12" ng-repeat="book in books">
@@ -14,7 +25,7 @@
                         <div class="row">
                             <div class="col-md-9"><h3 style="margin-top: 0">{{book.bookName}}</h3></div>
                             <div class="col-md-3 text-right">
-                                <small><i class="fa fa-calendar"></i> {{book.createTime}}</small>
+                                <small><i class="fa fa-calendar"></i> {{book.createTime | date: 'yyyy-MM-dd' }}</small>
                             </div>
                         </div>
                         <p style="min-height: 70px">
@@ -33,6 +44,9 @@
                 </div>
             </div>
         </div>
-
     </div>
+</div>
+
+<div class="container">
+    <tm-pagination conf="paginationConf"></tm-pagination>
 </div>

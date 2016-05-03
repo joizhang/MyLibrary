@@ -68,4 +68,16 @@ public class BookControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    public void testBookList() throws Exception {
+        String page = "{\"currentPage\":\"1\", \"itemsPerPages\":\"12\"}";
+        String page2 = "[" +
+                "{name:'currentPage',value:'1'}," +
+                "{name:'itemsPerPages',value:'5'}" +
+                "]";
+        mockMvc.perform(post("/book/bookList").param("currentPage","1").param("itemsPerPages","5"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }

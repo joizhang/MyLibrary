@@ -1,6 +1,4 @@
 <div class="container">
-
-
     <div class="row">
         <div class="col-md-12">
             <alert ng-repeat="alert in alerts" type="alert.type" close="alert.close()">
@@ -8,9 +6,12 @@
             </alert>
         </div>
     </div>
+</div>
 
+<div class="container" ng-controller="AddBookController">
     <div class="row">
         <div class="col-md-12">
+            <a href="javascript:void(0)" ng-click="test()">123</a>
             <div class="panel panel-default">
                 <div class="panel-heading">请添加新书</div>
                 <div class="panel-body">

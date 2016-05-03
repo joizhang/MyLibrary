@@ -7,14 +7,29 @@
  * Controller of the MyLibraryApp
  */
 angular.module('MyLibraryApp')
-    .controller('IndexController', function($scope, $http, $position) {
-        $scope.fetchBooksList = function() {
-            $http.get('app/data/bookList.json')
-                .success(function(response){
-                    $scope.books = response.bookList;
-                    console.log('success123');
+    .controller('IndexController', function($scope, $http) {
+        var fetchBooksList = function() {
+
+            var postData = [
+                {name:'currentPage',value:$scope.paginationConf.currentPage},
+                {name:'itemsPerPages',value:$scope.paginationConf.itemsPerPages}
+            ];
+            console.log(postData);
+
+            $http.post('/book/bookList?currentPage=' + $scope.paginationConf.currentPage + '&itemsPerPages=' + $scope.paginationConf.itemsPerPages)
+                .success(function(data){
+                    console.log(data.dataList)
+                    $scope.books = data.dataList;
+                    $scope.paginationConf.totalItems = data.totalRecord;
+                    console.log($scope.paginationConf);
                 });
         };
 
-        $scope.fetchBooksList();
+        $scope.paginationConf = {
+            currentPage: 1,
+            itemsPerPages : 5
+        };
+
+        //通过$watch currentPage和itemperPage 当他们一变化的时候，重新获取数据条目
+        $scope.$watch('paginationConf.currentPage', fetchBooksList);
     });

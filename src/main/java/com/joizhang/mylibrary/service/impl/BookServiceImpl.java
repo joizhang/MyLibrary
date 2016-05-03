@@ -4,13 +4,17 @@ import com.joizhang.mylibrary.dao.IBaseDao;
 import com.joizhang.mylibrary.model.po.SysLog;
 import com.joizhang.mylibrary.model.po.TBook;
 import com.joizhang.mylibrary.model.vo.Book;
+import com.joizhang.mylibrary.model.vo.Pager;
 import com.joizhang.mylibrary.service.IBookService;
 import com.joizhang.mylibrary.service.ISysLogService;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,7 +22,6 @@ import java.util.UUID;
  */
 @Service("bookService")
 public class BookServiceImpl implements IBookService {
-
 
 
     @Autowired
@@ -35,8 +38,8 @@ public class BookServiceImpl implements IBookService {
         tBook.setCreateTime(new Timestamp(System.currentTimeMillis()));
         tBook.setLend(0);
 
-        TBook bookFromDb =  bookDAO.get("from TBook t where replace(t.bookName, ' ', '')=?0 or t.bookNumber=?1", new String[]{tBook.getBookName().trim(), tBook.getBookNumber()});
-        if(bookFromDb != null) {
+        TBook bookFromDb = bookDAO.get("from TBook t where replace(t.bookName, ' ', '')=?0 or t.bookNumber=?1", new String[]{tBook.getBookName().trim(), tBook.getBookNumber()});
+        if (bookFromDb != null) {
             return false;
         }
 
@@ -47,6 +50,45 @@ public class BookServiceImpl implements IBookService {
         return true;
     }
 
+    public Pager<Book> getBookList(Pager<Book> pager, String search) {
+        System.out.println(ReflectionToStringBuilder.toString(pager));
+
+        Pager<Book> returnPager = new Pager<Book>();
+        //算出总数据条数
+        returnPager.setTotalRecord(bookDAO.count("select count(bookId) from TBook"));
+        //算出总页数
+        returnPager.setTotalPage(bookDAO.countPage("select count(bookId) from TBook", pager.getPageSize()));
+
+        StringBuffer sbf = new StringBuffer();
+        sbf.append("from TBook t");
+        //获得记录集
+        if (search != null && !search.equals("")) {
+            sbf.append(" where t.bookName like ?0");
+            returnPager.setDataList(changeModel(bookDAO.find(sbf.toString(), new Object[]{search}, pager.getCurrentPage(), pager.getPageSize())));
+        } else {
+            returnPager.setDataList(changeModel(bookDAO.find(sbf.toString(), new Object[]{}, pager.getCurrentPage(), pager.getPageSize())));
+        }
+
+        //当前页
+        returnPager.setCurrentPage(pager.getCurrentPage());
+        //每页记录数
+        returnPager.setPageSize(pager.getPageSize());
+
+        return returnPager;
+    }
+
+    private List<Book> changeModel(List<TBook> tBooks) {		//将RmsUser转换为User
+        List<Book> books = new ArrayList<Book>();
+        if (tBooks != null && tBooks.size() > 0) {
+            for (TBook tBook : tBooks) {
+                Book book = new Book();
+                BeanUtils.copyProperties(tBook, book);
+
+                books.add(book);
+            }
+        }
+        return books;
+    }
     public String deleteBook(String bookId) {
         return "success";
     }

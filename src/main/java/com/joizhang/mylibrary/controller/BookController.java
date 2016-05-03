@@ -1,6 +1,7 @@
 package com.joizhang.mylibrary.controller;
 
 import com.joizhang.mylibrary.model.vo.Book;
+import com.joizhang.mylibrary.model.vo.Pager;
 import com.joizhang.mylibrary.service.IBookService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
@@ -37,10 +38,37 @@ public class BookController {
 
         logger.info("1 {}",ReflectionToStringBuilder.toString(book));
         if (bookService.addBook(book)) {
-            return "ok";
+            return "success";
         } else {
             return "fail";
         }
     }
 
+    /* 获得列表 */
+    @RequestMapping(value = "/bookList", method = RequestMethod.POST)
+    @ResponseBody
+    public Pager<Book> bookList(HttpServletRequest request) {
+        Pager<Book> pager = new Pager<Book>();
+
+        String currentPage =  WebUtils.getCleanParam(request, "currentPage");
+        String pageSize = WebUtils.getCleanParam(request, "itemsPerPages");
+        String search = WebUtils.getCleanParam(request, "search");
+        System.out.println(pageSize +" --- "+ currentPage);
+
+        if(currentPage != null){
+            pager.setCurrentPage(Integer.parseInt(currentPage));
+        } else {
+            pager.setCurrentPage(1);
+        }
+
+        if(pageSize != null){
+            pager.setPageSize(Integer.parseInt(pageSize));
+        } else {
+            pager.setPageSize(5);
+        }
+
+        pager = bookService.getBookList(pager, search);
+        System.out.println(ReflectionToStringBuilder.toString(pager));
+        return pager;
+    }
 }

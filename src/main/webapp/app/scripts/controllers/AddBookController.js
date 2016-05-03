@@ -7,7 +7,7 @@
  * Controller of the MyLibraryApp
  */
 angular.module('MyLibraryApp')
-    .controller('AddBookController', ['$scope', '$http', 'alertService', function ($scope, $http, alertService) {
+    .controller('AddBookController', ['$scope', '$http', 'commAlertService', function ($scope, $http, commAlertService) {
         $scope.book = {};
 
         $scope.bookFormSubmit = function (valid, book) {
@@ -20,17 +20,18 @@ angular.module('MyLibraryApp')
                     url: '/book/addBook',
                     data: angular.toJson($scope.book),
                 }).success(function (data) {
-                    if (data != null && data == "ok") {
+                    if (data != null && data === '"success"') {
                         console.log(data);
-                        //$scope.alerts.push({type:'success',msg : '保存成功！'});
-                        alertService.add('success', '保存成功！');
+                        //commAlertService.alertService().add('success', '保存成功！');
                         $scope.book = {};
                     } else {
-                        alertService.add('danger', '保存失败，相同名称的书籍已存在！');
-                        //$scope.alerts.push({type:'danger',msg : '保存失败，相同名称的书籍已存在！'});
+                        commAlertService.alertService().add('danger', '保存失败，相同名称的书籍已存在！');
                     }
                 });
             }
         };
 
+        $scope.test = function() {
+            console.log('123');
+        };
     }]);
