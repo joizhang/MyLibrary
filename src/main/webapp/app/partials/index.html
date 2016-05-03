@@ -1,4 +1,4 @@
-<div class="container" ng-controller="IndexController">
+<div class="container">
     <div class="row">
         <div class="col-md-12" style="margin-bottom: 20px">
             <div class="input-group custom-search-form">
@@ -35,7 +35,11 @@
                             <div class="col-md-3 col-md-offset-9 text-right">
                                 <ul class="list-inline" style="color: #999">
                                     <li><a href=""><i class="fa fa-edit"></i> 修改</a></li>
-                                    <li><a href=""><i class="fa fa-trash"></i> 删除</a></li>
+                                    <li>
+                                        <a href="javascript:void(0)" ng-click="delBook(book.bookId)">
+                                            <i class="fa fa-trash"></i> 删除
+                                        </a>
+                                    </li>
                                     <li><a href=""><i class="fa fa-minus"></i> 借出</a></li>
                                 </ul>
                             </div>

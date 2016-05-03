@@ -8,6 +8,8 @@
  */
 angular.module('MyLibraryApp')
     .controller('IndexController', function($scope, $http) {
+        $scope.books = [];
+
         var fetchBooksList = function() {
 
             var postData = [
@@ -18,10 +20,10 @@ angular.module('MyLibraryApp')
 
             $http.post('/book/bookList?currentPage=' + $scope.paginationConf.currentPage + '&itemsPerPages=' + $scope.paginationConf.itemsPerPages)
                 .success(function(data){
-                    console.log(data.dataList)
+                    //console.log(data.dataList)
                     $scope.books = data.dataList;
                     $scope.paginationConf.totalItems = data.totalRecord;
-                    console.log($scope.paginationConf);
+                    //console.log($scope.paginationConf);
                 });
         };
 
@@ -32,4 +34,14 @@ angular.module('MyLibraryApp')
 
         //通过$watch currentPage和itemperPage 当他们一变化的时候，重新获取数据条目
         $scope.$watch('paginationConf.currentPage', fetchBooksList);
+
+        $scope.delBook = function(bookId) {
+            console.log(bookId);
+            $http.post('/book/deleteBook/' + bookId)
+                .success(function(data){
+                    if (data.msg === "success") {
+                        fetchBooksList();
+                    }
+                });
+        };
     });

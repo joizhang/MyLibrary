@@ -16,5 +16,5 @@ public interface IBookService {
 
     public Pager<Book> getBookList(Pager<Book> pager, String search);
 
-    public String deleteBook(String bookId);
+    public void deleteBook(String bookId);
 }

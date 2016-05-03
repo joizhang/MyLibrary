@@ -3,11 +3,35 @@ package com.joizhang.mylibrary.dao;
 import java.io.Serializable;
 import java.util.List;
 
-public interface IBaseDao<T> {
+public interface IBaseDao<T extends Serializable, PK extends Serializable> {
+
+	/**
+	 * 根据主键获取实体。如果没有相应的实体，返回 null
+	 * @param id 主键
+	 * */
+	public T get(PK id);
+
+	/**
+	 * 根据主键获取实体。如果没有相应的实体，抛出异常
+	 * @param id 主键
+	 * */
+	public T load(PK id);
+
+	public T get(Class<T> c, Serializable id);
+
+	public T get(String hql, Object[] param);
+
+	public T get(String hql, List<Object> param);
 
 	public Serializable save(T o);
 
 	public void delete(T o);
+
+	/**
+	 * 根据主键删除指定实体
+	 * @param id 主键
+	 * */
+	public void deleteByKey(PK id);
 
 	public void update(T o);
 
@@ -34,12 +58,6 @@ public interface IBaseDao<T> {
 
 	public List<T> find(String hql, List<Object> param, Integer page, Integer rows);
 
-	public T get(Class<T> c, Serializable id);
-
-	public T get(String hql, Object[] param);
-
-	public T get(String hql, List<Object> param);
-	
 	/**
 	 * 算出总的页数（不带条件）
 	 * @param hql hql语句

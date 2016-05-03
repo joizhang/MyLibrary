@@ -8,7 +8,6 @@ angular.module('MyLibraryApp', [
         'ui.router',
         'ui.bootstrap',
         'angular-loading-bar',
-        'globalAlert'
     ])
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         $ocLazyLoadProvider.config({

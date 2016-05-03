@@ -80,4 +80,12 @@ public class BookControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    public void testDelBook() throws Exception {
+        String bookId = "f122df83-8c9b-42bd-bbe6-dc3c088da660";
+        mockMvc.perform(post("/book/deleteBook/" + bookId))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }

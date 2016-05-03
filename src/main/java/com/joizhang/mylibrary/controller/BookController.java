@@ -3,6 +3,7 @@ package com.joizhang.mylibrary.controller;
 import com.joizhang.mylibrary.model.vo.Book;
 import com.joizhang.mylibrary.model.vo.Pager;
 import com.joizhang.mylibrary.service.IBookService;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/4/22.
@@ -34,14 +36,15 @@ public class BookController {
     /*添加新图书*/
     @RequestMapping(value = "/addBook", method = RequestMethod.POST)
     @ResponseBody
-    public String addBook(@RequestBody Book book) {
-
+    public Map<String, Object> addBook(@RequestBody Book book) {
+        Map<String, Object> map = new HashedMap();
         logger.info("1 {}",ReflectionToStringBuilder.toString(book));
         if (bookService.addBook(book)) {
-            return "success";
+           map.put("msg","success");
         } else {
-            return "fail";
+            map.put("msg","fail");
         }
+        return map;
     }
 
     /* 获得列表 */
@@ -70,5 +73,15 @@ public class BookController {
         pager = bookService.getBookList(pager, search);
         System.out.println(ReflectionToStringBuilder.toString(pager));
         return pager;
+    }
+
+    /* 删除图书 */
+    @RequestMapping(value = "/deleteBook/{bookId}", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> deleteBook(@PathVariable String bookId) {
+        Map<String, Object> map = new HashedMap();
+        bookService.deleteBook(bookId);
+        map.put("msg", "success");
+        return map;
     }
 }

@@ -25,7 +25,7 @@ public class BookServiceImpl implements IBookService {
 
 
     @Autowired
-    private IBaseDao<TBook> bookDAO;
+    private IBaseDao<TBook, String> bookDAO;
     @Autowired
     private ISysLogService logService;
 
@@ -89,7 +89,9 @@ public class BookServiceImpl implements IBookService {
         }
         return books;
     }
-    public String deleteBook(String bookId) {
-        return "success";
+
+    public void deleteBook(String bookId) {
+        System.out.println(ReflectionToStringBuilder.toString(bookDAO.load(bookId)));
+        bookDAO.deleteByKey(bookId);
     }
 }

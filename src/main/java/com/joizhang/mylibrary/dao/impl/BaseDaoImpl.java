@@ -12,7 +12,10 @@ import org.springframework.stereotype.Repository;
 import com.joizhang.mylibrary.dao.IBaseDao;
 
 @Repository("baseDao")
-public class BaseDaoImpl<T> implements IBaseDao<T> {
+public class BaseDaoImpl<T extends Serializable, PK extends Serializable> implements IBaseDao<T, PK> {
+
+	// 实体类类型(由构造方法自动赋值)
+	private Class<T> entityClass;
 
 	private SessionFactory sessionFactory;
 
@@ -28,14 +31,52 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 	private Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
+
+	/**************    方法实现   **************/
+
+	@SuppressWarnings("unchecked")
+	public T get(PK id) {
+		return (T) this.getCurrentSession().get(entityClass, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	public T load(PK id) {
+		return (T) this.getCurrentSession().load(entityClass, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	public T get(Class<T> c, Serializable id) {
+		return (T) this.getCurrentSession().get(c, id);
+	}
+
+	public T get(String hql, Object[] param) {
+		List<T> l = this.find(hql, param);
+		if (l != null && l.size() > 0) {
+			return l.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public T get(String hql, List<Object> param) {
+		List<T> l = this.find(hql, param);
+		if (l != null && l.size() > 0) {
+			return l.get(0);
+		} else {
+			return null;
+		}
+	}
 	
-	//保存
 	public Serializable save(T o) {
 		return this.getCurrentSession().save(o);
 	}
 
 	public void delete(T o) {
 		this.getCurrentSession().delete(o);
+	}
+
+	public void deleteByKey(PK id) {
+		this.delete(this.load(id));
 	}
 
 	public void update(T o) {
@@ -124,29 +165,8 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 		return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();
 	}
 
-	@SuppressWarnings("unchecked")
-	public T get(Class<T> c, Serializable id) {
-		return (T) this.getCurrentSession().get(c, id);
-	}
 
-	public T get(String hql, Object[] param) {
-		List<T> l = this.find(hql, param);
-		if (l != null && l.size() > 0) {
-			return l.get(0);
-		} else {
-			return null;
-		}
-	}
 
-	public T get(String hql, List<Object> param) {
-		List<T> l = this.find(hql, param);
-		if (l != null && l.size() > 0) {
-			return l.get(0);
-		} else {
-			return null;
-		}
-	}
-	
 	/**
 	 * 算出总的页数（不带条件）
 	 * @param hql hql语句

@@ -7,7 +7,7 @@
  * Controller of the MyLibraryApp
  */
 angular.module('MyLibraryApp')
-    .controller('AnalysisController', function($scope,$position) {
+    .controller('AnalysisController', function($scope) {
         $scope.line = {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             series: ['Series A', 'Series B'],
