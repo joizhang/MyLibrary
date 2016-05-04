@@ -1,6 +1,8 @@
 package com.joizhang.mylibrary.dao.impl;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -12,10 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.joizhang.mylibrary.dao.IBaseDao;
 
 @Repository("baseDao")
-public class BaseDaoImpl<T extends Serializable, PK extends Serializable> implements IBaseDao<T, PK> {
-
-	// 实体类类型(由构造方法自动赋值)
-	private Class<T> entityClass;
+public class BaseDaoImpl<T> implements IBaseDao<T> {
 
 	private SessionFactory sessionFactory;
 
@@ -33,16 +32,6 @@ public class BaseDaoImpl<T extends Serializable, PK extends Serializable> implem
 	}
 
 	/**************    方法实现   **************/
-
-	@SuppressWarnings("unchecked")
-	public T get(PK id) {
-		return (T) this.getCurrentSession().get(entityClass, id);
-	}
-
-	@SuppressWarnings("unchecked")
-	public T load(PK id) {
-		return (T) this.getCurrentSession().load(entityClass, id);
-	}
 
 	@SuppressWarnings("unchecked")
 	public T get(Class<T> c, Serializable id) {
@@ -73,10 +62,6 @@ public class BaseDaoImpl<T extends Serializable, PK extends Serializable> implem
 
 	public void delete(T o) {
 		this.getCurrentSession().delete(o);
-	}
-
-	public void deleteByKey(PK id) {
-		this.delete(this.load(id));
 	}
 
 	public void update(T o) {

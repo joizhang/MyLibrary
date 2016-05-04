@@ -1,4 +1,13 @@
 <div class="container">
+
+    <div class="bg-primary" style="padding: 10px">
+        上传规则：
+        <ol>
+            <li>新增书籍，<ins>填写好编号。</ins></li>
+            <li>上传图片，格式可以是：图书编号.jpg、图书编号.png。</li>
+        </ol>
+    </div>
+
     <div class="row">
         <div class="col-md-3">
 
@@ -7,7 +16,14 @@
             <div ng-show="uploader.isHTML5">
                 <!-- 3. nv-file-over uploader="link" over-class="className" -->
                 <div class="well my-drop-zone" nv-file-over="" uploader="uploader">
-                    将文件拖放到此处
+                    Base drop zone
+                </div>
+
+                <!-- Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                <div nv-file-drop="" uploader="uploader" options="{ url: '/foo' }">
+                    <div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">
+                        Another drop zone with its own settings
+                    </div>
                 </div>
             </div>
 

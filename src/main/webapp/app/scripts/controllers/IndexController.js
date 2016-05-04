@@ -7,7 +7,7 @@
  * Controller of the MyLibraryApp
  */
 angular.module('MyLibraryApp')
-    .controller('IndexController', function($scope, $http) {
+    .controller('IndexController', function($scope, $http, ngDialog) {
         $scope.books = [];
 
         var fetchBooksList = function() {
@@ -44,4 +44,35 @@ angular.module('MyLibraryApp')
                     }
                 });
         };
+
+        //格式化借出
+        $scope.formatLend = function(lend) {
+            if (lend == 0)
+                return '<i class="fa fa-minus"></i> 借出';
+
+            if (lend == 1)
+                return '<i class="fa fa-plus"></i> 返还';
+        };
+
+        //借书和还书
+        $scope.lendBook = function(lend) {
+            ngDialog.open({
+                template: '<p>my template</p>',
+                plain: true
+            });
+        }
+
+
+        $scope.test = function(){
+            var borrower = [];
+            $http.get('/user/getAllUser')
+                .success(function(data){
+                    console.log(data);
+                    borrower = data;
+                });
+            ngDialog.open({
+                template: '<p>my template</p>',
+                plain: true
+            });
+        }
     });

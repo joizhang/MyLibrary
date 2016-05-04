@@ -23,9 +23,8 @@ import java.util.UUID;
 @Service("bookService")
 public class BookServiceImpl implements IBookService {
 
-
     @Autowired
-    private IBaseDao<TBook, String> bookDAO;
+    private IBaseDao<TBook> bookDAO;
     @Autowired
     private ISysLogService logService;
 
@@ -43,7 +42,7 @@ public class BookServiceImpl implements IBookService {
             return false;
         }
 
-        System.out.println("Book's id is " + tBook.getBookId());
+        //System.out.println("Book's id is " + tBook.getBookId());
         bookDAO.save(tBook);
         logService.saveSysLog(tBook, ISysLogService.CREATE);
 
@@ -91,7 +90,24 @@ public class BookServiceImpl implements IBookService {
     }
 
     public void deleteBook(String bookId) {
-        System.out.println(ReflectionToStringBuilder.toString(bookDAO.load(bookId)));
-        bookDAO.deleteByKey(bookId);
+        //System.out.println(ReflectionToStringBuilder.toString(bookDAO.get(TBook.class, bookId)));
+        bookDAO.delete(bookDAO.get(TBook.class, bookId));
+    }
+
+    public void updatePhotoPath(String photoFolder, String uploadFileFileName) {
+        String filePrefix = uploadFileFileName.substring(0, uploadFileFileName.lastIndexOf("."));
+        List<TBook> tBooks = new ArrayList<TBook>();
+        TBook tBook = new TBook();
+        try {
+            tBooks = bookDAO.find("from TBook t where bookNumber like ?0", new String[] {'%'+filePrefix+'%'});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (tBooks.size() > 0) {
+            tBook = (TBook) tBooks.get(0);
+            tBook.setBookPhoto(photoFolder + uploadFileFileName);
+        }
+        bookDAO.update(tBook);
     }
 }

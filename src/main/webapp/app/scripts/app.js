@@ -8,6 +8,8 @@ angular.module('MyLibraryApp', [
         'ui.router',
         'ui.bootstrap',
         'angular-loading-bar',
+        'ngSanitize',
+        'ngDialog'
     ])
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         $ocLazyLoadProvider.config({
@@ -51,10 +53,6 @@ angular.module('MyLibraryApp', [
                             files: ['app/bower_components/angular-resource/angular-resource.js']
                         }),
                         $ocLazyLoad.load({
-                            name: 'ngSanitize',
-                            files: ['app/bower_components/angular-sanitize/angular-sanitize.js']
-                        }),
-                        $ocLazyLoad.load({
                             name: 'ngTouch',
                             files: ['app/bower_components/angular-touch/angular-touch.js']
                         })
@@ -73,8 +71,7 @@ angular.module('MyLibraryApp', [
                         }),
                         $ocLazyLoad.load({
                             name: 'tm.pagination',
-                            files: [
-                                'app/js/tm.pagination.js']
+                            files: ['app/js/tm.pagination.js']
                         })
                     }
                 }
@@ -124,7 +121,10 @@ angular.module('MyLibraryApp', [
                         }),
                         $ocLazyLoad.load({
                             name: 'MyLibraryApp',
-                            files: ['app/scripts/controllers/BookPhotoController.js']
+                            files: [
+                                'app/scripts/directives/preview.js',
+                                'app/scripts/controllers/BookPhotoController.js'
+                            ]
                         })
                     }
                 }

@@ -3,19 +3,7 @@ package com.joizhang.mylibrary.dao;
 import java.io.Serializable;
 import java.util.List;
 
-public interface IBaseDao<T extends Serializable, PK extends Serializable> {
-
-	/**
-	 * 根据主键获取实体。如果没有相应的实体，返回 null
-	 * @param id 主键
-	 * */
-	public T get(PK id);
-
-	/**
-	 * 根据主键获取实体。如果没有相应的实体，抛出异常
-	 * @param id 主键
-	 * */
-	public T load(PK id);
+public interface IBaseDao<T> {
 
 	public T get(Class<T> c, Serializable id);
 
@@ -26,12 +14,6 @@ public interface IBaseDao<T extends Serializable, PK extends Serializable> {
 	public Serializable save(T o);
 
 	public void delete(T o);
-
-	/**
-	 * 根据主键删除指定实体
-	 * @param id 主键
-	 * */
-	public void deleteByKey(PK id);
 
 	public void update(T o);
 

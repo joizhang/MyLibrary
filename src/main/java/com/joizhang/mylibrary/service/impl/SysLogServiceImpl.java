@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class SysLogServiceImpl implements ISysLogService {
 
     @Autowired
-    private IBaseDao<SysLog, String> logDAO;
+    private IBaseDao<SysLog> logDAO;
 
     public void saveSysLog(Object o, int type) {
         String sql = null;
