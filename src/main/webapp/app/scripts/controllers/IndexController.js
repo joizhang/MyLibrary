@@ -56,23 +56,25 @@ angular.module('MyLibraryApp')
 
         //借书和还书
         $scope.lendBook = function(lend) {
-            ngDialog.open({
-                template: '<p>my template</p>',
-                plain: true
-            });
-        }
-
-
-        $scope.test = function(){
             var borrower = [];
-            $http.get('/user/getAllUser')
+            $http.get('user/getAllUser')
                 .success(function(data){
-                    console.log(data);
                     borrower = data;
                 });
-            ngDialog.open({
-                template: '<p>my template</p>',
-                plain: true
-            });
+
+            if (lend == 0) {
+                ngDialog.open({
+                    template: 'app/partials/bookView/lendBook.html',
+                    controller: ['$scope', function($scope) {
+                        // controller logic
+                        $scope.bookName = '123';
+                    }]
+                });
+            }
+
+            if (lend == 1) {
+
+            }
         }
+
     });

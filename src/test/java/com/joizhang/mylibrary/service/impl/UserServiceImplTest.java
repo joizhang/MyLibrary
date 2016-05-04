@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +17,7 @@ import static org.junit.Assert.*;
  * Created by Administrator on 2016/5/4.
  */
 @ContextConfiguration(locations = {"classpath*:/spring*.xml"})
-public class UserServiceImplTest {
+public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImplTest.class);
 
@@ -25,9 +27,10 @@ public class UserServiceImplTest {
     @Test
     public void testAddUser() throws Exception {
         User user = new User();
-        user.setUsername("admin");
+        user.setUsername("joizhang");
         user.setPassword("123");
         logger.info(ReflectionToStringBuilder.toString(user));
+        System.out.println(user == null);
         userService.createUser(user);
     }
 }
