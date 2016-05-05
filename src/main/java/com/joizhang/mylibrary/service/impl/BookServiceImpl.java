@@ -76,7 +76,7 @@ public class BookServiceImpl implements IBookService {
         return returnPager;
     }
 
-    private List<Book> changeModel(List<TBook> tBooks) {		//将RmsUser转换为User
+    private List<Book> changeModel(List<TBook> tBooks) {
         List<Book> books = new ArrayList<Book>();
         if (tBooks != null && tBooks.size() > 0) {
             for (TBook tBook : tBooks) {

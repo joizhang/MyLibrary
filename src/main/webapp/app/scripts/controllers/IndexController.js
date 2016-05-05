@@ -16,7 +16,7 @@ angular.module('MyLibraryApp')
                 {name:'currentPage',value:$scope.paginationConf.currentPage},
                 {name:'itemsPerPages',value:$scope.paginationConf.itemsPerPages}
             ];
-            console.log(postData);
+            //console.log(postData);
 
             $http.post('/book/bookList?currentPage=' + $scope.paginationConf.currentPage + '&itemsPerPages=' + $scope.paginationConf.itemsPerPages)
                 .success(function(data){
@@ -35,6 +35,7 @@ angular.module('MyLibraryApp')
         //通过$watch currentPage和itemperPage 当他们一变化的时候，重新获取数据条目
         $scope.$watch('paginationConf.currentPage', fetchBooksList);
 
+        //删除书籍
         $scope.delBook = function(bookId) {
             console.log(bookId);
             $http.post('/book/deleteBook/' + bookId)
@@ -55,26 +56,47 @@ angular.module('MyLibraryApp')
         };
 
         //借书和还书
-        $scope.lendBook = function(lend) {
-            var borrower = [];
-            $http.get('user/getAllUser')
+        $scope.lendBook = function(book, target) {
+            var borrowerNames = [];
+            var test = ['Alabama', 'Alaska'];
+            //console.log(test);
+            console.log(target.getAttribute("ng-bind-html"));
+            $http.get('/user/getAllUserName')
                 .success(function(data){
-                    borrower = data;
+                    borrowerNames = data;
+                    //console.log(borrowerNames);
+
+                    if (book.lend == 0) {
+                        ngDialog.open({
+                            template: 'app/partials/bookView/lendBook.html',
+                            controller: ['$scope', function($scope) {
+                                // controller logic
+                                $scope.bookName = book.bookName;
+                                $scope.bookNumber = book.bookNumber;
+                                $scope.borrowerNames = borrowerNames;
+                                //console.log('lalalal' + $scope.borrowers);
+
+                                $scope.submitLendBookForm = function(valid, lendBook) {
+                                    var postBook = [
+                                        {name:'lendBookName', value:lendBook.lendBookName},
+                                        {name:'lendBookNumber', value:lendBook.lendBookNumber},
+                                        {name:'lendBookBorrower', value:lendBook.lendBookBorrower}
+                                    ];
+                                    console.log(postBook);
+                                    $http.post('/book/lendBook', postBook)
+                                        .success(function(data) {
+                                            console.log('121212');
+                                        });
+                                }
+                            }]
+                        });
+                    }
+
+                    if (book.lend == 1) {
+
+                    }
                 });
 
-            if (lend == 0) {
-                ngDialog.open({
-                    template: 'app/partials/bookView/lendBook.html',
-                    controller: ['$scope', function($scope) {
-                        // controller logic
-                        $scope.bookName = '123';
-                    }]
-                });
-            }
-
-            if (lend == 1) {
-
-            }
         }
 
     });

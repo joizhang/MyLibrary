@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -29,7 +31,32 @@ public class UserServiceImpl implements IUserService {
         BeanUtils.copyProperties(user, sysUser);
         sysUser.setUserId(UUID.randomUUID().toString());
         sysUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        if ((userIBaseDao.find("from SysUser where username=?0", new String[]{sysUser.getUsername()})).size() == 0) {
+            userIBaseDao.saveOrUpdate(sysUser);
+        }
 
-        userIBaseDao.save(sysUser);
+    }
+
+    public List<User> getAllUsers() {
+        //System.out.println(changeModel(userIBaseDao.find("from SysUser")));
+        return changeModel(userIBaseDao.find("from SysUser"));
+    }
+
+    public List getAllUserNames() {
+        //System.out.println(userIBaseDao.find("select username from SysUser"));
+        return userIBaseDao.find("select username from SysUser");
+    }
+
+    private List<User> changeModel(List<SysUser> sysUsers) {        //将RmsUser转换为User
+        List<User> users = new ArrayList<User>();
+        if (sysUsers != null && sysUsers.size() > 0) {
+            for (SysUser sysUser : sysUsers) {
+                User user = new User();
+                BeanUtils.copyProperties(sysUser, user, "sysUserRoles");
+
+                users.add(user);
+            }
+        }
+        return users;
     }
 }

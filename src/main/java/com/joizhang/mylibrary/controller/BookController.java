@@ -38,9 +38,9 @@ public class BookController {
         Map<String, Object> map = new HashedMap();
         //logger.info("1 {}",ReflectionToStringBuilder.toString(book));
         if (bookService.addBook(book)) {
-           map.put("msg","success");
+            map.put("msg", "success");
         } else {
-            map.put("msg","fail");
+            map.put("msg", "fail");
         }
         return map;
     }
@@ -51,18 +51,18 @@ public class BookController {
     public Pager<Book> bookList(HttpServletRequest request) {
         Pager<Book> pager = new Pager<Book>();
 
-        String currentPage =  WebUtils.getCleanParam(request, "currentPage");
+        String currentPage = WebUtils.getCleanParam(request, "currentPage");
         String pageSize = WebUtils.getCleanParam(request, "itemsPerPages");
         String search = WebUtils.getCleanParam(request, "search");
         //System.out.println(pageSize +" --- "+ currentPage);
 
-        if(currentPage != null){
+        if (currentPage != null) {
             pager.setCurrentPage(Integer.parseInt(currentPage));
         } else {
             pager.setCurrentPage(1);
         }
 
-        if(pageSize != null){
+        if (pageSize != null) {
             pager.setPageSize(Integer.parseInt(pageSize));
         } else {
             pager.setPageSize(5);
@@ -97,7 +97,7 @@ public class BookController {
         MultipartFile file = request.getFile(itr.next());
         //logger.info(ReflectionToStringBuilder.toString(file));
 
-        if (!file.isEmpty()){
+        if (!file.isEmpty()) {
             FileUtils fileUtils = new FileUtils();
             String realPath = request.getSession().getServletContext().getRealPath("/");
             //获取源文件名
@@ -120,11 +120,25 @@ public class BookController {
                 file.transferTo(targetFile);
                 map.put("msg", "success");
                 bookService.updatePhotoPath(targetFile.getPath(), uploadFileFileName);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 map.put("msg", "fail");
             }
         }
 
+        return map;
+    }
+
+    @RequestMapping(value = "/lendBook", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> lendBook(HttpServletRequest request) {
+        Map<String, Object> map = new HashedMap();
+
+        String lendBookName = WebUtils.getCleanParam(request, "lendBookName");
+        String lendBookNumber = WebUtils.getCleanParam(request, "lendBookNumber");
+        String lendBookBorrower = WebUtils.getCleanParam(request, "lendBookBorrower");
+
+        logger.info("lendBookName:" + lendBookName + " lendBookNumber:" + lendBookNumber + " lendBookBorrower" + lendBookBorrower);
+        map.put("msg", "success");
         return map;
     }
 }

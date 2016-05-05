@@ -27,10 +27,21 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
     @Test
     public void testAddUser() throws Exception {
         User user = new User();
-        user.setUsername("joizhang");
+        user.setUsername((new String("张新林".getBytes(),"UTF-8")).toString());
         user.setPassword("123");
         logger.info(ReflectionToStringBuilder.toString(user));
-        System.out.println(user == null);
+//        System.out.println(user == null);
         userService.createUser(user);
+    }
+
+    @Test
+    public void testGetAllUsers() {
+        assertNotNull(userService.getAllUsers());
+    }
+
+    @Test
+    public void testGetAllUserNames() {
+        //logger.info(ReflectionToStringBuilder.toString(userService.getAllUserNames()));
+        assertNotNull(userService.getAllUserNames());
     }
 }
