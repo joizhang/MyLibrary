@@ -40,7 +40,8 @@
                                             <i class="fa fa-trash"></i> 删除
                                         </a>
                                     </li>
-                                    <li><a href="javascript:void(0)" ng-click="lendBook(book, $event.target)" ng-bind-html="formatLend(book.lend)"></a></li>
+                                    <li ng-show="!bookLendAway"><a href="javascript:void(0)" ng-click="lendOrReturnBook(book)" ng-bind-html="formatLend(book.lend)"></a></li>
+                                    <li ng-show="bookLendAway"><a href="javascript:void(0)" ng-click="lendOrReturnBook(book)" ng-bind-html="formatLend(book.lend)"></a></li>
                                 </ul>
                             </div>
                         </div>

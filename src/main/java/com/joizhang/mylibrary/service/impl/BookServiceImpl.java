@@ -1,7 +1,7 @@
 package com.joizhang.mylibrary.service.impl;
 
 import com.joizhang.mylibrary.dao.IBaseDao;
-import com.joizhang.mylibrary.model.po.SysLog;
+import com.joizhang.mylibrary.model.po.SysUser;
 import com.joizhang.mylibrary.model.po.TBook;
 import com.joizhang.mylibrary.model.vo.Book;
 import com.joizhang.mylibrary.model.vo.Pager;
@@ -26,6 +26,8 @@ public class BookServiceImpl implements IBookService {
     @Autowired
     private IBaseDao<TBook> bookDAO;
     @Autowired
+    private IBaseDao<SysUser> userDao;
+    @Autowired
     private ISysLogService logService;
 
     public boolean addBook(Book book) {
@@ -37,7 +39,8 @@ public class BookServiceImpl implements IBookService {
         tBook.setCreateTime(new Timestamp(System.currentTimeMillis()));
         tBook.setLend(0);
 
-        TBook bookFromDb = bookDAO.get("from TBook t where replace(t.bookName, ' ', '')=?0 or t.bookNumber=?1", new String[]{tBook.getBookName().trim(), tBook.getBookNumber()});
+        TBook bookFromDb = bookDAO.get("from TBook t where replace(t.bookName, ' ', '')=?0 or t.bookNumber=?1",
+                new String[]{tBook.getBookName().trim(), tBook.getBookNumber()});
         if (bookFromDb != null) {
             return false;
         }
@@ -50,7 +53,7 @@ public class BookServiceImpl implements IBookService {
     }
 
     public Pager<Book> getBookList(Pager<Book> pager, String search) {
-        System.out.println(ReflectionToStringBuilder.toString(pager));
+        //System.out.println(ReflectionToStringBuilder.toString(pager));
 
         Pager<Book> returnPager = new Pager<Book>();
         //算出总数据条数
@@ -63,9 +66,11 @@ public class BookServiceImpl implements IBookService {
         //获得记录集
         if (search != null && !search.equals("")) {
             sbf.append(" where t.bookName like ?0");
-            returnPager.setDataList(changeModel(bookDAO.find(sbf.toString(), new Object[]{search}, pager.getCurrentPage(), pager.getPageSize())));
+            returnPager.setDataList(changeModel(bookDAO.find(sbf.toString(), new Object[]{search},
+                    pager.getCurrentPage(), pager.getPageSize())));
         } else {
-            returnPager.setDataList(changeModel(bookDAO.find(sbf.toString(), new Object[]{}, pager.getCurrentPage(), pager.getPageSize())));
+            returnPager.setDataList(changeModel(bookDAO.find(sbf.toString(), new Object[]{},
+                    pager.getCurrentPage(), pager.getPageSize())));
         }
 
         //当前页
@@ -109,5 +114,53 @@ public class BookServiceImpl implements IBookService {
             tBook.setBookPhoto(photoFolder + uploadFileFileName);
         }
         bookDAO.update(tBook);
+    }
+
+    public String updateBookLend(String lendBookName, String lendBookNumber, String lendBookBorrower, int lend) {
+        // 1.判断书籍是否存在
+        List<TBook> tBooks = bookDAO.find("from TBook t where bookName=?0 and bookNumber=?1",
+                new String[] {lendBookName, lendBookNumber});
+        if (tBooks.size() == 0) {
+            return "bookNotExist";
+        }
+        // 2.判断借阅者是否存在
+        List<SysUser> sysUsers = userDao.find("from SysUser t where username=?0", new String[] {lendBookBorrower});
+        if (sysUsers.size() == 0) {
+            return "borrowerNotExist";
+        }
+
+        TBook tBook = tBooks.get(0);
+        tBook.setLend(lend);
+        tBook.setBorrowId(sysUsers.get(0).getUserId());
+        bookDAO.update(tBook);
+        return null;
+    }
+
+    @Deprecated
+    public String checkLendInfo(String lendBookName, String lendBookNumber, String lendBookBorrower) {
+        // 1.判断书籍是否存在
+        TBook tBook = (bookDAO.find("from TBook t where bookName=?0 and bookNumber=?1",
+                new String[] {lendBookName, lendBookNumber})).get(0);
+        if (tBook == null) {
+            return "bookNotExist";
+        }
+        // 2.判断借阅者是否存在
+        SysUser sysUser = (userDao.find("from SysUser t where username=?0", new String[] {lendBookBorrower})).get(0);
+        if (sysUser == null) {
+            return "borrowerNotExist";
+        }
+
+        return null;
+    }
+
+    public void updateBookReturn(String returnBookName, String returnBookNumber, int lend) {
+        // 1.判断书籍是否存在
+        List<TBook> tBooks = bookDAO.find("from TBook t where t.bookName=?0 and t.bookNumber=?1 and t.lend=?2",
+                new Object[] {returnBookName, returnBookNumber, 1});
+        if (tBooks.size() > 0) {
+            TBook tBook = tBooks.get(0);
+            tBook.setLend(lend);
+            bookDAO.update(tBook);
+        }
     }
 }

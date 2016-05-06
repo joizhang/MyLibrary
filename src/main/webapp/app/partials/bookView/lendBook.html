@@ -1,30 +1,33 @@
 <div class="row">
     <div class="col-md-12">
-        <form name="lendBookForm" novalidate ng-submit="submitLendBookForm(lendBookForm.$valid, lendBook)"
+        <form name="lendBookForm" novalidate ng-submit="submitLendBookForm(lendBookForm.$valid, lendBookBorrower)"
               class="form-horizontal showcase-form" style="padding: 15px">
             <div class="form-group">
                 <label class="col-sm-3 control-label">书籍名称</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" value="{{bookName}}"
-                           ng-model="lendBook.lendBookName" readonly>
+                    <input type="text" class="form-control" value="{{bookName}}" readonly>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">书籍编号</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" value="{{bookNumber}}"
-                           ng-model="lendBook.lendBookNumber" readonly>
+                    <input type="text" class="form-control" value="{{bookNumber}}" readonly>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">借阅人</label>
                 <div class="col-sm-9">
-                    <input type="text" ng-model="lendBook.lendBookBorrower"
+                    <input type="text" ng-model="lendBookBorrower" ng-focus="clearMsg()"
                            uib-typeahead="borrowerName for borrowerName in borrowerNames | filter:$viewValue | limitTo:5"
                            class="form-control" required>
                 </div>
+            </div>
+
+            <div class="col-sm-9 col-sm-offset-3 text-danger" ng-show="showMe">
+                <span ng-show="bookNotExist">书籍不存在</span>
+                <span ng-show="borrowerNotExist">借阅者不存在</span>
             </div>
 
             <div class="form-group">
@@ -32,9 +35,6 @@
                     <button type="submit" class="btn btn-success btn-block"
                             ng-disabled="lendBookForm.$invalid">►
                     </button>
-                    <!--<button type="submit" class="btn btn-success btn-block"
-                            ng-disabled="myForm.username.$invalid || myForm.password.$invalid">登录
-                    </button>-->
                 </div>
             </div>
         </form>

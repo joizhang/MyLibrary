@@ -88,4 +88,18 @@ public class BookControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    public void testLendBook() throws Exception {
+        mockMvc.perform(post("/book/lendBook?lendBookName=1212&lendBookNumber=1212&lendBookBorrower=1212"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void testReturnBook() throws Exception {
+        mockMvc.perform(post("/book/returnBook?returnBookName=1212&returnBookNumber=1212"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }

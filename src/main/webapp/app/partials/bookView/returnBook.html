@@ -1,38 +1,36 @@
 <div class="row">
     <div class="col-md-12">
-        <form name="myForm" novalidate ng-submit="submitForm(myForm.$valid)"
-              class="form-horizontal showcase-form" style="padding: 15px">
+        <form name="lendBookForm" novalidate class="form-horizontal showcase-form" style="padding: 15px">
             <div class="form-group">
-                <label class="col-sm-4 control-label">书籍名称</label>
-                <div class="col-sm-8">
-
+                <label class="col-sm-3 control-label">书籍名称</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{{bookName}}" readonly>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-4 control-label">书籍编号</label>
-                <div class="col-sm-8">
-
+                <label class="col-sm-3 control-label">书籍编号</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{{bookNumber}}" readonly>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-4 control-label">借阅人</label>
-                <div class="col-sm-8">
-                    <input type="email" name="user_email" ng-model="vm.user.email" required="" class="form-control"
-                           placeholder="邮箱">
+                <label class="col-sm-3 control-label">借阅人</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{{borrowerName}}" readonly>
                 </div>
             </div>
 
-            <div style="color:red"
-                 ng-show="(myForm.username.$dirty && myForm.username.$invalid) || myForm.password.$dirty && myForm.password.$invalid">
-                <span ng-show="myForm.username.$error.required || myForm.password.$error.required">用户名或密码不能为空。</span>
+            <div class="col-sm-9 col-sm-offset-3 text-danger" ng-show="showMe">
+                <span ng-show="bookNotExist">书籍不存在</span>
+                <span ng-show="borrowerNotExist">借阅者不存在</span>
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-danger btn-block"
-                        ng-disabled="myForm.username.$invalid || myForm.password.$invalid">登录
-                </button>
+                <div class="col-sm-3 col-sm-offset-9">
+                    <button type="submit" class="btn btn-danger btn-block" ng-click="returnBook();closeThisDialog()">►</button>
+                </div>
             </div>
         </form>
     </div>

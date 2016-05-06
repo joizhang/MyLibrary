@@ -111,8 +111,8 @@ public class BookController {
             try {
                 File targetFile = new File(photoFolder, uploadFileFileName);
                 //如果目标文件已存在，删除
-                if (targetFile.exists()) {
-                    targetFile.delete();
+                if (targetFile.exists() && targetFile.delete()) {
+                    System.out.println("Delete Success");
                 } else {
                     fileUtils.creatFolder(photoFolder);
                 }
@@ -128,17 +128,52 @@ public class BookController {
         return map;
     }
 
+    /* 借书 */
     @RequestMapping(value = "/lendBook", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> lendBook(HttpServletRequest request) {
-        Map<String, Object> map = new HashedMap();
+
+        String lendBookName = WebUtils.getCleanParam(request, "lendBookName");
+        String lendBookNumber = WebUtils.getCleanParam(request, "lendBookNumber");
+        String lendBookBorrower = WebUtils.getCleanParam(request, "lendBookBorrower");
+        int lend = 1;
+
+        //logger.info("lendBookName:" + lendBookName + " lendBookNumber:" + lendBookNumber + " lendBookBorrower:" + lendBookBorrower);
+
+        return returnLendBookInfo(bookService.updateBookLend(lendBookName, lendBookNumber, lendBookBorrower, lend));
+    }
+
+    /* 检查借书新息 */
+    @RequestMapping(value = "/checkLendInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> checkLendInfo(HttpServletRequest request) {
 
         String lendBookName = WebUtils.getCleanParam(request, "lendBookName");
         String lendBookNumber = WebUtils.getCleanParam(request, "lendBookNumber");
         String lendBookBorrower = WebUtils.getCleanParam(request, "lendBookBorrower");
 
-        logger.info("lendBookName:" + lendBookName + " lendBookNumber:" + lendBookNumber + " lendBookBorrower" + lendBookBorrower);
-        map.put("msg", "success");
-        return map;
+        return returnLendBookInfo(bookService.checkLendInfo(lendBookName, lendBookNumber, lendBookBorrower));
+    }
+
+    public Map<String, Object> returnLendBookInfo(String errorMessage) {
+        Map<String, Object> map = new HashedMap();
+        if (errorMessage != null) {
+            map.put("msg", errorMessage);
+            return map;
+        } else {
+            map.put("msg", "success");
+            return map;
+        }
+    }
+
+    /* 还书 */
+    @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
+    @ResponseBody
+    public void returnBook(HttpServletRequest request) {
+
+        String returnBookName = WebUtils.getCleanParam(request, "returnBookName");
+        String returnBookNumber = WebUtils.getCleanParam(request, "returnBookNumber");
+        int lend = 0;
+        bookService.updateBookReturn(returnBookName, returnBookNumber, lend);
     }
 }

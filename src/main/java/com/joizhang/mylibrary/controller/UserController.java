@@ -2,7 +2,9 @@ package com.joizhang.mylibrary.controller;
 
 import com.joizhang.mylibrary.model.vo.User;
 import com.joizhang.mylibrary.service.IUserService;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/5/4.
@@ -37,8 +41,19 @@ public class UserController {
     @RequestMapping(value = "/getAllUserName", method = RequestMethod.GET)
     @ResponseBody
     public List getAllUserName() {
-        List userNames = userService.getAllUserNames();
-        return userNames;
+        return userService.getAllUserNames();
+    }
+
+    @RequestMapping(value = "/getBorrowerName", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getBorrowerName(HttpServletRequest request) {
+        Map<String, Object> map = new HashedMap();
+        String borrowerId = WebUtils.getCleanParam(request, "borrowerId");
+        String borrowerName = userService.getBorrowName(borrowerId);
+        if (borrowerName != null) {
+            map.put("borrowerName", borrowerName);
+        }
+        return map;
     }
 
 }

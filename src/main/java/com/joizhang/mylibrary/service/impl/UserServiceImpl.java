@@ -47,6 +47,14 @@ public class UserServiceImpl implements IUserService {
         return userIBaseDao.find("select username from SysUser");
     }
 
+    public String getBorrowName(String borrowerId) {
+        List<SysUser> sysUsers = userIBaseDao.find("from SysUser t where t.userId=?0", new String[] {borrowerId});
+        if (sysUsers.size() > 0) {
+            return sysUsers.get(0).getUsername();
+        }
+        return null;
+    }
+
     private List<User> changeModel(List<SysUser> sysUsers) {        //将RmsUser转换为User
         List<User> users = new ArrayList<User>();
         if (sysUsers != null && sysUsers.size() > 0) {

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.joizhang.mylibrary.dao.IBaseDao;
 
-@Repository("baseDao")
+@Repository
 public class BaseDaoImpl<T> implements IBaseDao<T> {
 
 	private SessionFactory sessionFactory;

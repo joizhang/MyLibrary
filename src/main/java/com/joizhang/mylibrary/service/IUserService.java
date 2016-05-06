@@ -25,4 +25,10 @@ public interface IUserService {
      * */
     @SuppressWarnings("uncheck")
     List getAllUserNames();
+
+    /**
+     * 获得结束这名称
+     * @param borrowerId 借阅者ID
+     * */
+    String getBorrowName(String borrowerId);
 }
