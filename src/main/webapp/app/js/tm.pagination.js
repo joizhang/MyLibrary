@@ -147,7 +147,6 @@ angular.module('tm.pagination', [])
 
             // 变更当前页
             scope.changeCurrentPage = function(item) {
-                console.log('12333333333');
                 if(item == '...'){
                     return;
                 }else{

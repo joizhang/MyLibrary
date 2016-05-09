@@ -130,6 +130,7 @@ angular.module('MyLibraryApp')
                                                 showBorrower();
                                             } else {
                                                 fetchBooksList();
+                                                ngDialog.close('ngdialog1');
                                             }
                                         });
                                 }

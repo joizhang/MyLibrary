@@ -1,11 +1,12 @@
 package com.joizhang.mylibrary.model.vo;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Created by Administrator on 2016/4/22.
  */
-public class Book {
+public class Book implements Serializable{
     private String bookId;
     private String bookNumber;
     private String bookName;
@@ -13,8 +14,10 @@ public class Book {
     private Timestamp createTime;
     private String description;
     private Integer lend;
+    private Timestamp lendTime;
     private String borrowId;
     private String sellAddress;
+    private String bookType;
 
     public String getBookId() {
         return bookId;
@@ -72,6 +75,14 @@ public class Book {
         this.lend = lend;
     }
 
+    public Timestamp getLendTime() {
+        return lendTime;
+    }
+
+    public void setLendTime(Timestamp lendTime) {
+        this.lendTime = lendTime;
+    }
+
     public String getBorrowId() {
         return borrowId;
     }
@@ -88,6 +99,14 @@ public class Book {
         this.sellAddress = sellAddress;
     }
 
+    public String getBookType() {
+        return bookType;
+    }
+
+    public void setBookType(String bookType) {
+        this.bookType = bookType;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -98,8 +117,10 @@ public class Book {
                 ", createTime=" + createTime +
                 ", description='" + description + '\'' +
                 ", lend=" + lend +
+                ", lendTime=" + lendTime +
                 ", borrowId='" + borrowId + '\'' +
                 ", sellAddress='" + sellAddress + '\'' +
+                ", bookType='" + bookType + '\'' +
                 '}';
     }
 }

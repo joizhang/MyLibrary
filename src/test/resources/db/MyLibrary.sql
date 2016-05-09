@@ -1,111 +1,134 @@
-/*
-Navicat MySQL Data Transfer
+drop table if exists sys_log;
 
-Source Server         : mysql-connection
-Source Server Version : 50711
-Source Host           : localhost:3306
-Source Database       : mylibrary
+drop table if exists sys_resource;
 
-Target Server Type    : MYSQL
-Target Server Version : 50711
-File Encoding         : 65001
+drop table if exists sys_role;
 
-Date: 2016-04-28 14:06:23
-*/
+drop table if exists sys_role_resource;
 
-SET FOREIGN_KEY_CHECKS=0;
+drop table if exists sys_user;
 
--- ----------------------------
--- Table structure for sys_log
--- ----------------------------
-DROP TABLE IF EXISTS `sys_log`;
-CREATE TABLE `sys_log` (
-  `log_id` varchar(64) NOT NULL,
-  `operate_man` varchar(64) NOT NULL,
-  `operate_table` varchar(16) NOT NULL,
-  `content` text NOT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `ipadress` varchar(32) DEFAULT NULL,
-  `type` varchar(16) NOT NULL,
-  PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists sys_user_role;
 
--- ----------------------------
--- Table structure for sys_resource
--- ----------------------------
-DROP TABLE IF EXISTS `sys_resource`;
-CREATE TABLE `sys_resource` (
-  `resource_id` varchar(64) NOT NULL,
-  `parent_id` varchar(64) NOT NULL,
-  `resource_name` varchar(32) NOT NULL,
-  `sort` int(11) DEFAULT NULL,
-  `permission` varchar(32) NOT NULL,
-  PRIMARY KEY (`resource_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists t_book;
 
--- ----------------------------
--- Table structure for sys_role
--- ----------------------------
-DROP TABLE IF EXISTS `sys_role`;
-CREATE TABLE `sys_role` (
-  `role_id` varbinary(64) NOT NULL,
-  `role` varchar(32) NOT NULL,
-  `description` varchar(1024) NOT NULL,
-  `available` int(11) NOT NULL,
-  PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
+drop table if exists t_bookType;
 
--- ----------------------------
--- Table structure for sys_role_resource
--- ----------------------------
-DROP TABLE IF EXISTS `sys_role_resource`;
-CREATE TABLE `sys_role_resource` (
-  `resource_id` varchar(64) NOT NULL,
-  `role_id` varbinary(64) NOT NULL,
-  PRIMARY KEY (`resource_id`,`role_id`),
-  KEY `FK_Reference_4` (`role_id`),
-  CONSTRAINT `FK_Reference_3` FOREIGN KEY (`resource_id`) REFERENCES `sys_resource` (`resource_id`),
-  CONSTRAINT `FK_Reference_4` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: sys_log                                               */
+/*==============================================================*/
+create table sys_log
+(
+  log_id               varchar(64) not null,
+  operate_man          varchar(64) not null,
+  operate_table        varchar(16) not null,
+  content              text not null,
+  create_time          timestamp not null,
+  ipadress             varchar(32),
+  type                 varchar(16) not null,
+  primary key (log_id)
+);
 
--- ----------------------------
--- Table structure for sys_user
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user` (
-  `user_id` varchar(64) NOT NULL,
-  `username` varchar(32) NOT NULL,
-  `password` varchar(64) NOT NULL,
-  `salt` varchar(64) NOT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+alter table sys_log comment '日志表';
 
--- ----------------------------
--- Table structure for sys_user_role
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role` (
-  `user_id` varchar(64) NOT NULL,
-  `role_id` varbinary(64) NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FK_Reference_2` (`role_id`),
-  CONSTRAINT `FK_Reference_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`),
-  CONSTRAINT `FK_Reference_2` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: sys_resource                                          */
+/*==============================================================*/
+create table sys_resource
+(
+  resource_id          varchar(64) not null,
+  parent_id            varchar(64) not null,
+  resource_name        varchar(32) not null,
+  sort                 int,
+  permission           varchar(32) not null,
+  primary key (resource_id)
+);
 
--- ----------------------------
--- Table structure for t_book
--- ----------------------------
-DROP TABLE IF EXISTS `t_book`;
-CREATE TABLE `t_book` (
-  `book_id` varchar(64) NOT NULL,
-  `book_name` varchar(32) NOT NULL,
-  `book_photo` varchar(32) DEFAULT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `description` text,
-  `lend` int(11) NOT NULL,
-  `borrow_id` varchar(64) DEFAULT NULL,
-  `sell_address` varchar(1024) DEFAULT NULL,
-  PRIMARY KEY (`book_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: sys_role                                              */
+/*==============================================================*/
+create table sys_role
+(
+  role_id              varbinary(64) not null,
+  role                 varchar(32) not null,
+  description          varchar(1024) not null,
+  available            int not null,
+  primary key (role_id)
+);
+
+alter table sys_role comment '角色表';
+
+/*==============================================================*/
+/* Table: sys_role_resource                                     */
+/*==============================================================*/
+create table sys_role_resource
+(
+  resource_id          varchar(64) not null,
+  role_id              varbinary(64) not null,
+  primary key (resource_id, role_id)
+);
+
+/*==============================================================*/
+/* Table: sys_user                                              */
+/*==============================================================*/
+create table sys_user
+(
+  user_id              varchar(64) not null,
+  username             varchar(32) not null,
+  password             varchar(64) not null,
+  salt                 varchar(64) not null,
+  create_time          timestamp not null,
+  primary key (user_id)
+);
+
+alter table sys_user comment '用户表';
+
+/*==============================================================*/
+/* Table: sys_user_role                                         */
+/*==============================================================*/
+create table sys_user_role
+(
+  user_id              varchar(64) not null,
+  role_id              varbinary(64) not null,
+  primary key (user_id, role_id)
+);
+
+/*==============================================================*/
+/* Table: t_book                                                */
+/*==============================================================*/
+create table t_book
+(
+  book_id              varchar(64) not null,
+  book_number          varchar(32) not null,
+  book_name            varchar(32) not null,
+  book_photo           varchar(32),
+  create_time          timestamp not null,
+  description          text,
+  lend                 int not null,
+  lend_time            timestamp not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  borrow_id            varchar(64),
+  sell_address         varchar(1024),
+  book_type            varchar(64) not null,
+  primary key (book_id)
+);
+
+/*==============================================================*/
+/* Table: t_bookType                                            */
+/*==============================================================*/
+create table t_bookType
+(
+  bookType             varchar(100) not null,
+  primary key (bookType)
+);
+
+alter table sys_role_resource add constraint FK_Reference_3 foreign key (resource_id)
+references sys_resource (resource_id) on delete restrict on update restrict;
+
+alter table sys_role_resource add constraint FK_Reference_4 foreign key (role_id)
+references sys_role (role_id) on delete restrict on update restrict;
+
+alter table sys_user_role add constraint FK_Reference_1 foreign key (user_id)
+references sys_user (user_id) on delete restrict on update restrict;
+
+alter table sys_user_role add constraint FK_Reference_2 foreign key (role_id)
+references sys_role (role_id) on delete restrict on update restrict;

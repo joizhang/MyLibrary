@@ -47,7 +47,7 @@ public class BookControllerTest {
 
     @Test
     public void testAddBook() throws Exception {
-        String book = "{\"bookName\":\"123\", \"description\":\"123\"}";
+        String book = "{\"bookNumber\": \"驱蚊器\", \"bookName\": \"气温气温\", \"bookType\": \"web\", \"description\": \"气温气温气温\",\"sellAddress\":\"http://127.0.0.1:3000/#/main/addBook\"}";
         mockMvc
                 .perform(post("/book/addBook").contentType(MediaType.APPLICATION_JSON).content(book))
                 .andExpect(status().isOk())

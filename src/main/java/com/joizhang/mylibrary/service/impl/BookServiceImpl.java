@@ -3,9 +3,11 @@ package com.joizhang.mylibrary.service.impl;
 import com.joizhang.mylibrary.dao.IBaseDao;
 import com.joizhang.mylibrary.model.po.SysUser;
 import com.joizhang.mylibrary.model.po.TBook;
+import com.joizhang.mylibrary.model.po.TBooktype;
 import com.joizhang.mylibrary.model.vo.Book;
 import com.joizhang.mylibrary.model.vo.Pager;
 import com.joizhang.mylibrary.service.IBookService;
+import com.joizhang.mylibrary.service.IBookTypeService;
 import com.joizhang.mylibrary.service.ISysLogService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.beans.BeanUtils;
@@ -29,15 +31,18 @@ public class BookServiceImpl implements IBookService {
     private IBaseDao<SysUser> userDao;
     @Autowired
     private ISysLogService logService;
+    @Autowired
+    private IBookTypeService bookTypeService;
 
     public boolean addBook(Book book) {
         TBook tBook = new TBook();
         BeanUtils.copyProperties(book, tBook);
 
         tBook.setBookId(UUID.randomUUID().toString());
-        tBook.setBookPhoto("app/images/effectivejava.jpg");
+        tBook.setBookPhoto("app/images/default-avatar.jpg");
         tBook.setCreateTime(new Timestamp(System.currentTimeMillis()));
         tBook.setLend(0);
+        tBook.setLendTime(new Timestamp(System.currentTimeMillis()));
 
         TBook bookFromDb = bookDAO.get("from TBook t where replace(t.bookName, ' ', '')=?0 or t.bookNumber=?1",
                 new String[]{tBook.getBookName().trim(), tBook.getBookNumber()});
@@ -48,6 +53,13 @@ public class BookServiceImpl implements IBookService {
         //System.out.println("Book's id is " + tBook.getBookId());
         bookDAO.save(tBook);
         logService.saveSysLog(tBook, ISysLogService.CREATE);
+
+        //若数据库中不存在该书籍类型则保存
+        if (bookTypeService.getBookType(book.getBookType()) == null) {
+            TBooktype tBooktype = new TBooktype();
+            tBooktype.setBookType(book.getBookType());
+            bookTypeService.saveBookType(tBooktype);
+        }
 
         return true;
     }

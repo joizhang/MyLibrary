@@ -22,8 +22,10 @@ public class TBook implements java.io.Serializable {
 	private Timestamp createTime;
 	private String description;
 	private Integer lend;
+	private Timestamp lendTime;
 	private String borrowId;
 	private String sellAddress;
+	private String bookType;
 
 	// Constructors
 
@@ -33,18 +35,22 @@ public class TBook implements java.io.Serializable {
 
 	/** minimal constructor */
 	public TBook(String bookId, String bookNumber, String bookName,
-			Timestamp createTime, Integer lend) {
+			Timestamp createTime, Integer lend, Timestamp lendTime,
+			String bookType) {
 		this.bookId = bookId;
 		this.bookNumber = bookNumber;
 		this.bookName = bookName;
 		this.createTime = createTime;
 		this.lend = lend;
+		this.lendTime = lendTime;
+		this.bookType = bookType;
 	}
 
 	/** full constructor */
 	public TBook(String bookId, String bookNumber, String bookName,
 			String bookPhoto, Timestamp createTime, String description,
-			Integer lend, String borrowId, String sellAddress) {
+			Integer lend, Timestamp lendTime, String borrowId,
+			String sellAddress, String bookType) {
 		this.bookId = bookId;
 		this.bookNumber = bookNumber;
 		this.bookName = bookName;
@@ -52,8 +58,10 @@ public class TBook implements java.io.Serializable {
 		this.createTime = createTime;
 		this.description = description;
 		this.lend = lend;
+		this.lendTime = lendTime;
 		this.borrowId = borrowId;
 		this.sellAddress = sellAddress;
+		this.bookType = bookType;
 	}
 
 	// Property accessors
@@ -121,6 +129,15 @@ public class TBook implements java.io.Serializable {
 		this.lend = lend;
 	}
 
+	@Column(name = "lend_time", nullable = false, length = 19)
+	public Timestamp getLendTime() {
+		return this.lendTime;
+	}
+
+	public void setLendTime(Timestamp lendTime) {
+		this.lendTime = lendTime;
+	}
+
 	@Column(name = "borrow_id", length = 64)
 	public String getBorrowId() {
 		return this.borrowId;
@@ -137,6 +154,15 @@ public class TBook implements java.io.Serializable {
 
 	public void setSellAddress(String sellAddress) {
 		this.sellAddress = sellAddress;
+	}
+
+	@Column(name = "book_type", nullable = false, length = 64)
+	public String getBookType() {
+		return this.bookType;
+	}
+
+	public void setBookType(String bookType) {
+		this.bookType = bookType;
 	}
 
 }
