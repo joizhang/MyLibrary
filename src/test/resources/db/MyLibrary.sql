@@ -117,8 +117,9 @@ create table t_book
 /*==============================================================*/
 create table t_bookType
 (
+  bookTypeId           int auto_increment,
   bookType             varchar(100) not null,
-  primary key (bookType)
+  primary key (bookTypeId)
 );
 
 alter table sys_role_resource add constraint FK_Reference_3 foreign key (resource_id)

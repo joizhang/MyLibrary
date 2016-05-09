@@ -55,9 +55,11 @@ public class BookServiceImpl implements IBookService {
         logService.saveSysLog(tBook, ISysLogService.CREATE);
 
         //若数据库中不存在该书籍类型则保存
-        if (bookTypeService.getBookType(book.getBookType()) == null) {
+        //System.out.println(bookTypeService.getBookType(book.getBookType()).getBookType() == null);
+        if (bookTypeService.getBookType(book.getBookType()).getBookType() == null) {
             TBooktype tBooktype = new TBooktype();
-            tBooktype.setBookType(book.getBookType());
+            tBooktype.setBookType(tBook.getBookType());
+            System.out.println(tBooktype.getBookType());
             bookTypeService.saveBookType(tBooktype);
         }
 

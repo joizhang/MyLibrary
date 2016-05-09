@@ -14,6 +14,7 @@ public class TBooktype implements java.io.Serializable {
 
 	// Fields
 
+	private String bookTypeId;
 	private String bookType;
 
 	// Constructors
@@ -23,13 +24,23 @@ public class TBooktype implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TBooktype(String bookType) {
+	public TBooktype(String bookTypeId, String bookType) {
+		this.bookTypeId = bookTypeId;
 		this.bookType = bookType;
 	}
 
 	// Property accessors
 	@Id
-	@Column(name = "bookType", unique = true, nullable = false, length = 100)
+	@Column(name = "bookTypeId", unique = true, nullable = false, length = 64)
+	public String getBookTypeId() {
+		return this.bookTypeId;
+	}
+
+	public void setBookTypeId(String bookTypeId) {
+		this.bookTypeId = bookTypeId;
+	}
+
+	@Column(name = "bookType", nullable = false, length = 100)
 	public String getBookType() {
 		return this.bookType;
 	}
@@ -37,5 +48,4 @@ public class TBooktype implements java.io.Serializable {
 	public void setBookType(String bookType) {
 		this.bookType = bookType;
 	}
-
 }

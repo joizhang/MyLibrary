@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2016/5/9.
@@ -36,6 +37,7 @@ public class BookTypeServiceImpl implements IBookTypeService {
     }
 
     public void saveBookType(TBooktype tBookType) {
+        tBookType.setBookTypeId(UUID.randomUUID().toString());
         tBookTypeIBaseDao.save(tBookType);
     }
 
